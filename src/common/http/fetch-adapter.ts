@@ -3,7 +3,7 @@ import { HttpAdapter } from "../interfaces/http-adapter.interface";
 
 export class FetchAdapter implements HttpAdapter {
    async request<T>(method: string, baseUrl:string, endpoint: string, headers: Record<string, string>, body?: any): Promise<T> {
-    const response = await fetch(`${baseUrl}${endpoint}`, {
+    const response = await fetch(`${baseUrl}/api/${endpoint}/`, {
       method,
       headers,
       body: body ? JSON.stringify(body) : undefined,

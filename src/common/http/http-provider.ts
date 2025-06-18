@@ -14,4 +14,7 @@ export abstract class HttpProvider {
     protected put<T>(endpoint: string, body: any) {
         return this.adapter.request<T>('PUT', this.baseUrl, endpoint,  this.headers, body);
     }
+    protected delete<T>(endpoint:string, ) {
+        return this.adapter.request<T>('DELETE', this.baseUrl,endpoint, this.headers);
+    }
 }
