@@ -1,6 +1,6 @@
-import { PaginationDto } from "src/common";
-import { CreateProductDto } from "../dto/create-product.dto";
-import { UpdateProductDto } from "../dto/update-product.dto";
+import { CreateProductDto } from "../../products/dto/create-product.dto";
+import { UpdateProductDto } from "../../products/dto/update-product.dto";
+import { PaginationDto } from "../dto/pagination.dto";
 
 export interface ProductServiceClient {
     getAllProducts(paginationDto: PaginationDto): Promise<any>;

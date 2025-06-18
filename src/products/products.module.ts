@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { ProductsController } from './products.controller';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { envs, PRODUCT_SERVICE } from 'src/config';
-import { ProductServiceClientTCP } from './clients/product-client.tcp';
+import { ProductServiceClientTCP } from '../common/clients/product-client.tcp';
 
 @Module({
   imports:[

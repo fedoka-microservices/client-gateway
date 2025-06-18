@@ -1,22 +1,18 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Inject, Query, ParseIntPipe } from '@nestjs/common';
-import { ClientProxy } from '@nestjs/microservices';
-import { PRODUCT_SERVICE } from 'src/config';
-import { ProductServiceClientTCP } from './clients/product-client.tcp';
-import { PaginationDto } from 'src/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query, ParseIntPipe } from '@nestjs/common';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
+import { ProductServiceClientTCP } from 'src/common/clients/product-client.tcp';
+import { PaginationDto } from 'src/common/dto/pagination.dto';
 
 @Controller('products')
 export class ProductsController {
   constructor(
-    // @Inject(PRODUCT_SERVICE) private readonly productServiceClient: ClientProxy
     private readonly productService:ProductServiceClientTCP
   ) {}
 
   @Post()
   create(@Body() createProductDto: CreateProductDto) {
     return this.productService.createProduct(createProductDto)
-    // return this.productsService.create(createProductDto);
   }
 
   @Get()

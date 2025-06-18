@@ -2,10 +2,10 @@ import {  Inject, Injectable, Logger } from "@nestjs/common";
 import { ProductServiceClient } from "../interfaces/product-client.interface";
 import { ClientProxy, RpcException } from "@nestjs/microservices";
 import { firstValueFrom } from "rxjs";
-import { PaginationDto } from "src/common";
 import { PRODUCT_SERVICE } from "src/config";
-import { CreateProductDto } from "../dto/create-product.dto";
-import { UpdateProductDto } from "../dto/update-product.dto";
+import { CreateProductDto } from "../../products/dto/create-product.dto";
+import { UpdateProductDto } from "../../products/dto/update-product.dto";
+import { PaginationDto } from "../dto/pagination.dto";
 
 @Injectable()
 export class ProductServiceClientTCP implements ProductServiceClient {
