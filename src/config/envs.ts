@@ -4,10 +4,12 @@ import { PRODUCT_SERVICE } from './services';
 
 interface EnvVars {
     PORT:number;
-    PRODUCT_SERVICE_PORT:number;
     PRODUCT_SERVICE_HOST:string;
-    SUPPLIER_SERVICE_HOST:string;
+    PRODUCT_SERVICE_PORT:number;
+    SUPPLIER_SERVICE_HOST:string; 
     SUPPLIER_SERVICE_PORT:number;
+    ORDER_SERVICE_PORT:number;
+    ORDER_SERVICE_HOST: string;
 }
 
 const envSchema = joi.object({
@@ -16,6 +18,8 @@ const envSchema = joi.object({
     PRODUCT_SERVICE_HOST: joi.string().required(),
     SUPPLIER_SERVICE_PORT: joi.number().required(),
     SUPPLIER_SERVICE_HOST: joi.string().required(),
+    ORDER_SERVICE_PORT: joi.number().required(),
+    ORDER_SERVICE_HOST: joi.string().required(),
 })
 .unknown(true);
 
@@ -33,5 +37,6 @@ export const envs = {
     productServicesPort: envVars.PRODUCT_SERVICE_PORT,
     supplierServiceHost: envVars.SUPPLIER_SERVICE_HOST,
     supplierServicesPort: envVars.SUPPLIER_SERVICE_PORT,
-
+    orderServiceHost: envVars.ORDER_SERVICE_HOST,
+    orderServicePort: envVars.ORDER_SERVICE_PORT,
 }

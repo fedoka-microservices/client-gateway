@@ -5,6 +5,7 @@ import { PaginationDto } from "../dto/pagination.dto";
 import { envs } from "src/config";
 import { CreateSupplierDto } from "src/supplier/dto/create-supplier.dto";
 import { UpdateSupplierDto } from "src/supplier/dto/update-supplier.dto";
+import { SupplierDto } from "src/supplier/dto/supplier.dto";
 
 
 @Injectable()
@@ -13,7 +14,7 @@ export class SupplierClient extends HttpProvider {
     constructor(){
         super(envs.supplierServiceHost, new FetchAdapter());
     } 
-    findAll(paginationDto:PaginationDto){
+    findAll(paginationDto:PaginationDto): Promise<SupplierDto[]>{
         const params = new URLSearchParams(paginationDto as Record<string,any>).toString();
         return this.get(`${this.endpoint}?${params}`);
     }

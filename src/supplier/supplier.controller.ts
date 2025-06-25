@@ -5,7 +5,7 @@ import { UpdateSupplierDto } from './dto/update-supplier.dto';
 import { PaginationDto } from 'src/common/dto/pagination.dto';
 
 
-@Controller('supplier')
+@Controller('suppliers')
 export class SupplierController {
   constructor(private readonly supplierServiceClient:SupplierClient) {}
 
