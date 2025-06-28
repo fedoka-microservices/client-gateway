@@ -1,14 +1,14 @@
 import {  Inject, Injectable, Logger } from "@nestjs/common";
 import { ClientProxy, RpcException } from "@nestjs/microservices";
 import { firstValueFrom } from "rxjs";
-import { PRODUCT_SERVICE } from "src/config";
+import { NATS_SERVICE } from "src/config";
 import { CreateProductDto } from "../../products/dto/create-product.dto";
 import { UpdateProductDto } from "../../products/dto/update-product.dto";
 import { PaginationDto } from "../dto/pagination.dto";
 
 @Injectable()
 export class ProductServiceClientTCP {
-    constructor(@Inject(PRODUCT_SERVICE) private readonly client: ClientProxy){}
+    constructor(@Inject(NATS_SERVICE) private readonly client: ClientProxy){}
     
     async createProduct(createProductDto: CreateProductDto):Promise<any> {
         try {

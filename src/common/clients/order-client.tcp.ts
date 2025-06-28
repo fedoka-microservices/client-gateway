@@ -1,8 +1,7 @@
 import { Inject, Injectable, Logger } from "@nestjs/common";
-import { PaginationDto } from "../dto/pagination.dto";
 import { OrderDto } from "src/orders/dto/order.dto";
 import { firstValueFrom } from "rxjs";
-import { ORDER_SERVICE } from "src/config";
+import { NATS_SERVICE } from "src/config";
 import { ClientProxy, RpcException } from "@nestjs/microservices";
 import { CreateOrderDto } from "src/orders/dto/create-order.dto";
 import { OrderPaginationDto } from "src/orders/dto/order-pagination.dto";
@@ -11,12 +10,13 @@ import { StatusDto } from "src/orders/dto/status.dto";
 @Injectable()
 export class OrderServiceTCPClient {
     private readonly logger = new Logger('order-service-client');
-    constructor(@Inject(ORDER_SERVICE) private readonly client:ClientProxy){}
+    constructor(@Inject(NATS_SERVICE) private readonly client:ClientProxy){}
 
     async createOrder(createOrderDto: CreateOrderDto): Promise<OrderDto> {
         try{
             return await firstValueFrom(this.client.send('createOrder', createOrderDto));
         } catch(error) {
+            this.logger.error('Error creating order', error);
             throw new RpcException(error)
         }
     }
@@ -25,6 +25,7 @@ export class OrderServiceTCPClient {
         try{
             return await firstValueFrom(this.client.send('findOneOrder',{id}));
         } catch(error) {
+            this.logger.error('Error GET order', error);
             throw new RpcException(error)
         }
     }
@@ -33,6 +34,7 @@ export class OrderServiceTCPClient {
             console.log('orderPaginationDto', orderPaginationDto);
             return  await firstValueFrom(this.client.send('findAllOrders', orderPaginationDto));
         } catch(error) {
+            this.logger.error('Error GET order', error);
             throw new RpcException(error)
         }
     }
@@ -40,6 +42,7 @@ export class OrderServiceTCPClient {
         try{
             return await firstValueFrom(this.client.send('findAllOrders',orderPaginationDto));
         } catch(error) {
+            this.logger.error('Error GET orders by status', error);
             throw new RpcException(error)
         }
     }
@@ -47,6 +50,7 @@ export class OrderServiceTCPClient {
     try{
         return await firstValueFrom(this.client.send('changeOrderStatus', {id,...statusDto}));
     } catch(error) {
+    this.logger.error('Error updating order status', error);
         throw new RpcException(error)
     }
 }
