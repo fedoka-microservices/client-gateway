@@ -12,7 +12,7 @@ import { SupplierDto } from "src/supplier/dto/supplier.dto";
 export class SupplierClient extends HttpProvider {
     public endpoint:string = 'suppliers';
     constructor(){
-        super(envs.supplierServiceHost, new FetchAdapter());
+        super('envs.supplierServiceHost', new FetchAdapter());
     } 
     findAll(paginationDto:PaginationDto): Promise<SupplierDto[]>{
         const params = new URLSearchParams(paginationDto as Record<string,any>).toString();

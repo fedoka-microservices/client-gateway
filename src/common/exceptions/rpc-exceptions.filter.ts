@@ -1,6 +1,5 @@
 
-import { Catch, RpcExceptionFilter, ArgumentsHost, ExceptionFilter } from '@nestjs/common';
-import { Observable, throwError } from 'rxjs';
+import { Catch, ArgumentsHost, ExceptionFilter } from '@nestjs/common';
 import { RpcException } from '@nestjs/microservices';
 
 @Catch(RpcException)
@@ -9,7 +8,12 @@ export class RpcCustomExceptionFilter implements ExceptionFilter{
     const ctx = host.switchToHttp();
     const resp = ctx.getResponse();
     const rpcError = exception.getError();
-
+    if ( rpcError.toString().includes('Empty response')){
+      return resp.status(400).json({
+          status: 500,
+          message: rpcError.toString().substring(0, rpcError.toString().indexOf('(', - 1))
+      });
+    }
     if (
         typeof rpcError === 'object' &&
         rpcError !== null &&
@@ -22,10 +26,10 @@ export class RpcCustomExceptionFilter implements ExceptionFilter{
                 : Number((rpcError as { status: any }).status);
         return resp.status(status).json(rpcError);
     }
-
+   
     resp.status(400).json({
         status: 400,
-        message: rpcError
+        message: rpcError['error'] || rpcError
     });
 
   }

@@ -1,13 +1,13 @@
 import { Controller, Get, Post, Body, Param, Delete, ParseIntPipe, Query, Put } from '@nestjs/common';
-import { SupplierClient } from 'src/common/clients/supplier-client.http';
 import { CreateSupplierDto } from './dto/create-supplier.dto';
 import { UpdateSupplierDto } from './dto/update-supplier.dto';
 import { PaginationDto } from 'src/common/dto/pagination.dto';
+import { SupplierServiceClientNats } from 'src/common/clients/supplier-client.nats';
 
 
 @Controller('suppliers')
 export class SupplierController {
-  constructor(private readonly supplierServiceClient:SupplierClient) {}
+  constructor(private readonly supplierServiceClient:SupplierServiceClientNats) {}
 
   @Post()
   create(@Body() createSupplierDto: CreateSupplierDto) {
@@ -31,6 +31,6 @@ export class SupplierController {
 
   @Delete(':id')
   remove(@Param('id', ParseIntPipe) id: number) {
-    return this.supplierServiceClient.remove(id);
+    // return this.supplierServiceClient.remove(id);
   }
 }
